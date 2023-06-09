@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Conversor de Números Romanos</title>
+</head>
+
+<style>
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Courier New', Courier, monospace;
+  box-sizing: border-box;
+}
+
+body{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #111111;
+  color: aliceblue;
+}
+
+h1{
+  margin-top: 100px !important;
+  color: #6e1980;
+}
+
+h2{
+  margin-top: 30px !important;
+  margin-bottom: 10px;
+}
+
+button{
+  all: unset;
+  padding: 10px;
+  margin-top: 20px !important;
+  background: #6e1980;
+  color: aliceblue;
+  outline:none !important;
+}
+
+button:hover {
+  background: #bd46b7;
+  cursor: pointer;
+}
+
+</style>
+
+<body>
+  <h1>Conversor de Números Romanos</h1>
+  <h2>Romano para Árabe</h2>
+  <input style="width: 230px;" type="text" id="romanInput" placeholder="Digite um número romano">
+  <button onclick="romanToArabic()">Converter</button>
+  <br>
+  <input type="text" id="arabicOutput" readonly>
+  
+  <h2>Árabe para Romano</h2>
+  <input style="width: 230px;" type="number" id="arabicInput" placeholder="Digite um número árabe">
+  <button onclick="arabicToRoman()">Converter</button>
+  <br>
+  <input type="text" id="romanOutput" readonly>
+</body>
+
+<script>
+  function romanToArabic() {
+    var romanInput = document.getElementById("romanInput").value.toUpperCase();
+    var romanNumerals = ["M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"];
+    var arabicValues = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1];
+    var arabicResult = 0;
+    var i = 0;
+
+    while (romanInput.length > 0 && i < romanNumerals.length) {
+      var currentSymbol = romanNumerals[i];
+      var symbolValue = arabicValues[i];
+
+      if (romanInput.indexOf(currentSymbol) === 0) {
+        arabicResult += symbolValue;
+        romanInput = romanInput.replace(currentSymbol, "");
+      } else {
+        i++;
+      }
+    }
+
+    if (romanInput.length > 0) {
+      alert("Número romano inválido.");
+      document.getElementById("romanInput").value = "";
+    } else {
+      document.getElementById("arabicOutput").value = arabicResult;
+    }
+  }
+
+  function arabicToRoman() {
+    var arabicInput = parseInt(document.getElementById("arabicInput").value);
+    var romanResult = "";
+    var arabicValues = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1];
+    var romanNumerals = ["M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"];
+
+    for (var i = 0; i < arabicValues.length; i++) {
+      while (arabicInput >= arabicValues[i]) {
+        romanResult += romanNumerals[i];
+        arabicInput -= arabicValues[i];
+      }
+    }
+
+    if (arabicInput > 0) {
+      alert("Número árabe inválido.");
+      document.getElementById("arabicInput").value = "";
+    } else {
+      document.getElementById("romanOutput").value = romanResult;
+    }
+  }
+</script>
+</html>
